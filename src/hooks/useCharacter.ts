@@ -10,6 +10,9 @@ export const useAllCharacters = (searchTerm: string, speciesFilter?: string) => 
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true;
+
     const fetchAll = async () => {
       setLoading(true);
       setError(null);
@@ -29,11 +32,15 @@ export const useAllCharacters = (searchTerm: string, speciesFilter?: string) => 
           },
         });
 
+        if (!isMounted || controller.signal.aborted) return;
+
         allResults = [...allResults, ...(data?.characters?.results || [])];
         totalPages = data?.characters?.info?.pages || 1;
 
         // traer el resto de páginas
         for (page = 2; page <= totalPages; page++) {
+          if (!isMounted || controller.signal.aborted) return;
+
           const { data } = await client.query<CharactersResponse>({
             query: GET_CHARACTERS,
             variables: {
@@ -46,15 +53,26 @@ export const useAllCharacters = (searchTerm: string, speciesFilter?: string) => 
           allResults = [...allResults, ...(data?.characters?.results || [])];
         }
 
-        setCharacters(allResults);
+        if (isMounted) {
+          setCharacters(allResults);
+        }
       } catch (err: unknown) {
-        setError(err instanceof Error ? err : new Error("Unexpected error"));
+        if (isMounted && !controller.signal.aborted) {
+          setError(err instanceof Error ? err : new Error("Unexpected error"));
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchAll();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [searchTerm, speciesFilter, client]);
 
   return { characters, loading, error };
