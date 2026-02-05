@@ -1,6 +1,6 @@
 import { useState } from "react";
-import  { SearchBar } from "../ui/SearchBar/SearchBar";
-import type { Character } from "../../types/character";
+import  { SearchBar } from "../../ui/SearchBar/SearchBar";
+import type { Character } from "../../../types/character";
 
 
 const Home = () => {
