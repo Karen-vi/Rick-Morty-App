@@ -10,7 +10,7 @@ import { SortControl } from "../../ui/SortControl/SortControl";
 type Props = { onSelectCharacter: (id: string) => void; };
 
 export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
-    const [selectedCharacterId,] = useState<string | null>(null);
+    // const [selectedCharacterId,] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [speciesFilter, setSpeciesFilter] = useState("All");
     const [characterFilter, setCharacterFilter] = useState("All")
@@ -45,13 +45,7 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">Error loading characters</p>}
-
-      {/* Solo para test: mostrar el id del personaje seleccionado */}
-      {selectedCharacterId && (
-        <div className="mt-4 p-2 border rounded">
-          Selected Character ID: {selectedCharacterId}
-        </div>
-      )}
+      
     </div>
   );
 }

@@ -9,13 +9,15 @@ export const CharacterDetailCard = ({ character }: { character: Character }) => 
     { label: UI_TEXT.OCCUPATION, value: character.occupation },
   ];
 
-  return (
-    <div className="space-y-2 text-gray-700">
-      {details.map((detail) => (
-        <p key={detail.label}>
-          <span className="font-semibold">{detail.label}:</span> {detail.value}
-        </p>
-      ))}
-    </div>
-  );
+    return (
+  <div className="flex flex-col space-y-4 text-gray-700">
+    {details.map((detail) => (
+      <div key={detail.label} className="flex flex-col">
+        <span className="font-semibold text-sm text-gray-900">{detail.label}</span>
+        <span>{detail.value}</span>
+      </div>
+    ))}
+  </div>
+)
+
 };
