@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Character } from "../../../types/character";
 import { useCharacters } from "../../../hooks/useCharacter"; 
 import { UI_TEXT } from "../../../constants/uiText";
+import { SortControl } from "../../ui/SortControl/SortControl";
 
 type Props = { onSelectCharacter: (id: string) => void; };
 
@@ -13,31 +14,46 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [speciesFilter, setSpeciesFilter] = useState("All");
     const [characterFilter, setCharacterFilter] = useState("All")
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
     
     const { characters, loading, error } = useCharacters(searchTerm, speciesFilter);
     const starredIds: string[] = []; 
 
     
-    const displayedCharacters = characters.filter((c) =>
-    characterFilter === "Starred"
-      ? starredIds.includes(c.id)
-      : characterFilter === "Others"
-      ? !starredIds.includes(c.id)
-      : true
-  )
-    const handleSelectCharacter = (id: string) => {
+//     const displayedCharacters = characters.filter((c) =>
+//     characterFilter === "Starred"
+//       ? starredIds.includes(c.id)
+//       : characterFilter === "Others"
+//       ? !starredIds.includes(c.id)
+//       : true
+//   ).sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name) );
+
+    // const displayedCharacters = characters .filter((c) => characterFilter === "Starred" ? starredIds.includes(c.id) : characterFilter === "Others" ? !starredIds.includes(c.id) : true ) .sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name) );
+   console.log(characters.map(c => c.name))
+    const displayedCharacters = characters.filter((c) => 
+        searchTerm ? c.name.toLowerCase()
+        .includes(searchTerm.toLowerCase()) : true 
+        
+        ).sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name, "en", { sensitivity: "base" }) : b.name.localeCompare(a.name, "en", { sensitivity: "base" }) );
+  
+  
+  
+        const handleSelectCharacter = (id: string) => {
     setSelectedCharacterId(id);
     console.log("Character selected:", id);
     }
   return (
     <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg">
         <h1 className="text-2xl  p-4 font-bold">{UI_TEXT.APP_TITLE}</h1>
+        
         <SearchBar searchTerm={searchTerm}
         onSearchTermChange={setSearchTerm}
         speciesFilter={speciesFilter}
         onSpeciesFilterChange={setSpeciesFilter}
         characterFilter={characterFilter}
         onCharacterFilterChange={setCharacterFilter} />
+        <SortControl sortOrder={sortOrder} onChange={setSortOrder} />
         <div>
         <ResultList characters={displayedCharacters} onSelectCharacter={onSelectCharacter}  />
         </div>

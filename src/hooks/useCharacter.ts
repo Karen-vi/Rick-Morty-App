@@ -9,7 +9,7 @@ export const useCharacters = (searchTerm: string, speciesFilter?: string) => {
       name: searchTerm || undefined,
       species: speciesFilter !== "All" ? speciesFilter : undefined
     },
-    skip: !searchTerm && speciesFilter === "All"
+    // skip: !searchTerm && speciesFilter === "All"
   });
 
   const characters: Character[] = data?.characters?.results || [];
