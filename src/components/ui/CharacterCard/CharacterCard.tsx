@@ -7,10 +7,10 @@ type CharacterCardProps = {
 
 export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
   return (
-    <div className=" rounded-lg cursor-pointer hover:bg-secondary-40 w-full flex justify-start border-t border-b border-secondary-150  p-1"
+    <div className="cursor-pointer hover:bg-secondary-40 w- flex justify-start border-t border-y "
     onClick={() => onSelect(character.id)}>
-        <div className=" p-3">
-        <div className="flex items-center space-x-4">
+        <div className="p-5  w-full">
+        <div className="  flex items-center space-x-4">
           <img
             src={character.image}
             alt={character.name}

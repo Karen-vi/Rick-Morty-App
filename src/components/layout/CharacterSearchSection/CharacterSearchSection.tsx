@@ -29,14 +29,16 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
     console.log("Character selected:", id);
     }
   return (
-    <div className="w-full md:w-1/2 p-1 bg-secondary-50 rounded-lg">
+    <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg">
       <SearchBar searchTerm={searchTerm}
         onSearchTermChange={setSearchTerm}
         speciesFilter={speciesFilter}
         onSpeciesFilterChange={setSpeciesFilter}
         characterFilter={characterFilter}
         onCharacterFilterChange={setCharacterFilter} />
-      <ResultList characters={displayedCharacters} onSelectCharacter={onSelectCharacter}  />
+        <div>
+        <ResultList characters={displayedCharacters} onSelectCharacter={onSelectCharacter}  />
+        </div>
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">Error loading characters</p>}
