@@ -5,6 +5,7 @@ export interface Character {
   species: string;
   status: string;
   gender?: string;
+  occupation?: string;
 }
 
 export interface CharactersResponse {
