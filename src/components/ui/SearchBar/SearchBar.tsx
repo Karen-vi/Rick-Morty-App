@@ -38,7 +38,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
         <div className="relative w-full lg:w-1/2">
 
           <MagnifyingGlassIcon 
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-textMuted pointer-events-none"
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"
           />
         {/* Input de búsqueda */}
         <input
@@ -47,7 +47,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={UI_TEXT.SEARCH_PLACEHOLDER}
         className="w-full 
-        bg-grayMedium
+        bg-secondary-100 text-black
               pl-10 
               pr-3 
               py-2 
@@ -61,10 +61,10 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
       {/* Botón toggle de filtros */}
       <button
-        className="mt-2 border py-1 flex items-center gap-1"
+        className="mt-2  flex items-center gap-1"
         onClick={() => setShowFilters(!showFilters)}
       >
-        <AdjustmentsVerticalIcon className="w-5 h-5" />
+        <AdjustmentsVerticalIcon className="w-6 h-7  text-primary-600" />
       </button>
 
       {/* Panel de filtros */}

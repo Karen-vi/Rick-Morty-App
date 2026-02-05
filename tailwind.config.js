@@ -13,12 +13,16 @@ export default {
           }, 
           
           secondary: { 
-              600: "#1F2937", 
-            }, 
-            textMuted: "#af2364", 
-            borderLight: "#E5E7EB", 
-            grayMedium: "#700f0f", 
+              600: "#63d838", 
+              200: "#6B7280",
+              100: "#E5E7EB"
+            },  
       }, 
+      fontFamily: { 
+        inter: ['Inter', 'sans-serif'], 
+        roboto: ['Roboto', 'sans-serif'], 
+        poppins: ['Poppins', 'sans-serif'], 
+      },
     }
   },
 };
