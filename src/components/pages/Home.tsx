@@ -15,19 +15,8 @@ const Home = () => {
 
   return (
     <div className="p-4">
-      
+       <div className="bg-primary-600 text-white p-6 rounded-lg shadow-md"> <h1 className="text-2xl font-bold">Hola Tailwind</h1> <p className="text-textMuted mt-2"> Este es un ejemplo usando tus colores personalizados. </p> <button className="mt-4 bg-secondary600 text-white px-4 py-2 rounded"> Botón </button> </div>
       <h1 className="text-2xl font-bold mb-4">Rick & Morty App</h1>
-      <div className="bg-red-500 text-white p-4">
-  tailwind test
-</div>
-<div className="bg-primary600 text-white p-4">
-  custom color test
-</div>
-
-    <div className="bg-primary600 text-primary100 p-4">
-  ¡Tus colores personalizados están activos!
-</div>
-
       {/* SearchBar con filtros */}
       <SearchBar onSelectCharacter={handleSelectCharacter} />
 

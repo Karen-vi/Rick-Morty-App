@@ -20,7 +20,8 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
   const { characters, loading, error } = useCharacters(searchTerm, speciesFilter);
 
-  const starredIds: string[] = []; // reemplazar con estado real
+  const starredIds: string[] = []; 
+
 
   const displayedCharacters = characters.filter((c) =>
     characterFilter === "Starred"
@@ -32,10 +33,6 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
   return (
     <div className="w-full p-4">
-      <div className="bg-red-500 text-white p-4">
-  rojo de tailwind
-</div>
-
       <div className="flex items-center gap-3 w-full">
 
         <div className="relative w-full lg:w-1/2">

@@ -4,6 +4,7 @@ import { client } from "./api/apollo/client";
 import App from "./App";
 import "./index.css";
 
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ApolloProvider client={client}>
     <App />
