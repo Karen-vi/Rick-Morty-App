@@ -7,6 +7,7 @@ import { SPECIES_OPTIONS, CHARACTER_OPTIONS } from "../../../constants/filters";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalSolid } from "@heroicons/react/24/solid";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalOutline } from "@heroicons/react/24/outline";
+import { ResultsList } from "../ResultList/ResultList";
 
 
 
@@ -37,7 +38,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
     <div className="w-full p-4">
       <div className="flex items-center gap-3 w-full">
       
-        <div className="relative w-full lg:w-2/5">
+        <div className="relative w-full lg:w-1/3">
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"/>
         {/* Input de búsqueda */}
         <input
@@ -57,7 +58,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
               
         />
          <button
-          className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center"
+          className=" focus:outline-none  absolute right-3 top-1/2 -translate-y-1/2 flex items-center"
           onClick={() => setShowFilters(!showFilters)}
           >
           {showFilters ? ( <AdjustmentsVerticalSolid className="w-6 h-6 text-primary-600" /> ) : ( <AdjustmentsVerticalOutline className="w-6 h-6 text-primary-600" /> )}
@@ -69,7 +70,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
       {/* Panel de filtros */}
       {showFilters && (
-        <div className="mt-3  md:w-2/5 border w-full bg-white shadow-md rounded-lg p-4 space-y-4">
+        <div className="mt-3  md:w-1/3 border 2px w-full bg-white shadow-md rounded-lg p-4 space-y-4">
           <FilterGroup
             title="Character"
             options={CHARACTER_OPTIONS}
@@ -94,16 +95,8 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
       {error && <p className="mt-2 text-red-500">Error loading characters</p>}
 
       {/* Resultados */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {displayedCharacters.map((c: Character) => (
-          <p
-            key={c.id}
-            className="cursor-pointer border rounded p-2 text-center"
-            onClick={() => onSelectCharacter(c.id)}
-          >
-            {c.name} ({c.species})
-          </p>
-        ))}
+      <div >
+         <ResultsList characters={displayedCharacters} onSelectCharacter={onSelectCharacter} />
       </div>
   </div>
   );
