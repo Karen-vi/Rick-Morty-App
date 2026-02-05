@@ -9,6 +9,7 @@ export default {
         primary: 
           {   100: "#eee3ff", 
               600: "#8054c7", 
+              800: "#afa8bb",
               700: "#5a3696",  
           }, 
           

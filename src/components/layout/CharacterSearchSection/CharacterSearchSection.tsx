@@ -29,7 +29,7 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
   
 
   return (
-    <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg">
+    <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg flex flex-col gap-4">
         <h1 className="text-2xl  p-4 font-bold">{UI_TEXT.APP_TITLE}</h1>
         
         <SearchBar searchTerm={searchTerm}
