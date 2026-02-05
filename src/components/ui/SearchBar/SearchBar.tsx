@@ -35,11 +35,8 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
     <div className="w-full p-4">
       <div className="flex items-center gap-3 w-full">
 
-        <div className="relative w-full lg:w-1/2">
-
-          <MagnifyingGlassIcon 
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"
-          />
+        <div className="relative w-2/5">
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"/>
         {/* Input de búsqueda */}
         <input
         type="text"
@@ -61,15 +58,16 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
       {/* Botón toggle de filtros */}
       <button
-        className="mt-2  flex items-center gap-1"
+        className="flex items-center gap-1"
         onClick={() => setShowFilters(!showFilters)}
       >
         <AdjustmentsVerticalIcon className="w-6 h-7  text-primary-600" />
       </button>
+    </div>
 
       {/* Panel de filtros */}
       {showFilters && (
-        <div className="mt-3 space-y-2">
+        <div className="mt-3 w-full bg-white shadow-md rounded-lg p-4 space-y-4">
           <FilterGroup
             title="Character"
             options={CHARACTER_OPTIONS}
@@ -82,6 +80,10 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
             selectedOption={speciesFilter}
             onSelect={setSpeciesFilter}
           />
+
+          <button className="w-full bg-primary-600 text-white py-2 rounded-lg">
+          Apply Filters
+        </button>
         </div>
       )}
 
@@ -101,7 +103,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
           </p>
         ))}
       </div>
-    </div>
+    
   </div>
   );
 };

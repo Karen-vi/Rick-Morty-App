@@ -15,7 +15,7 @@ export const FilterGroup = ({ title, options, selectedOption, onSelect }: Filter
             key={option}
             onClick={() => onSelect(option)}
             className={`px-3 py-1 rounded border font-bold ${
-              selectedOption === option ? "text-primary-600 text-white" : "bg-white"
+              selectedOption === option ? "text-primary-600 bg-primary-100" : "bg-white"
             }`}
           >
             {option}
