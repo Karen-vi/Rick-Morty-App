@@ -1,30 +1,17 @@
 import { useState } from "react";
 import  { SearchBar } from "../../ui/SearchBar/SearchBar";
 import type { Character } from "../../../types/character";
+import { CharacterSearchSection } from "../../layout/CharacterSearchSection/CharacterSearchSection";
 
 
 const Home = () => {
-  const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null);
-
-  // Función que pasamos al SearchBar
-  const handleSelectCharacter = (id: string) => {
-    setSelectedCharacterId(id);
-    console.log("Character selected:", id);
-    // Aquí podrías abrir un sidebar o modal con detalle
-  };
-
+  const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null)
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Rick & Morty App</h1>
-      {/* SearchBar con filtros */}
-      <SearchBar onSelectCharacter={handleSelectCharacter} />
-
-      {/* Solo para test: mostrar el id del personaje seleccionado */}
-      {selectedCharacterId && (
-        <div className="mt-4 p-2 border rounded">
-          Selected Character ID: {selectedCharacterId}
-        </div>
-      )}
+    <div className="p-1 ">
+      <h1 className=" bg-secondary-50 text-2xl font-bold mb-4">Rick & Morty App</h1>
+      <CharacterSearchSection onSelectCharacter={(id: string) => {
+        console.log("Character selected from Home:", id);
+      }} />
     </div>
   );
 };

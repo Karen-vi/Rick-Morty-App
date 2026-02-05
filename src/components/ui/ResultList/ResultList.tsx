@@ -6,7 +6,7 @@ type ResultsListProps = {
   onSelectCharacter: (id: string) => void;
 };
 
-export const ResultsList = ({ characters, onSelectCharacter }: ResultsListProps) => {
+export const ResultList = ({ characters, onSelectCharacter }: ResultsListProps) => {
   return (
     <div >
       {characters.map((c) => (

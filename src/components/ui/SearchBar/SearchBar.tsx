@@ -7,47 +7,34 @@ import { SPECIES_OPTIONS, CHARACTER_OPTIONS } from "../../../constants/filters";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalSolid } from "@heroicons/react/24/solid";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalOutline } from "@heroicons/react/24/outline";
-import { ResultsList } from "../ResultList/ResultList";
+import { ResultList } from "../ResultList/ResultList";
 
 
 
-type Props = {
-  onSelectCharacter: (id: string) => void;
-};
+type Props = { searchTerm: string; onSearchTermChange: (term: string) => void; speciesFilter: string; onSpeciesFilterChange: (species: string) => void; characterFilter: string; onCharacterFilterChange: (character: string) => void; };
 
-export const SearchBar = ({ onSelectCharacter }: Props) => {
-  const [searchTerm, setSearchTerm] = useState("");
+export const SearchBar = ({ 
+  searchTerm,
+  onSearchTermChange,
+  speciesFilter,
+  onSpeciesFilterChange,
+  characterFilter,
+  onCharacterFilterChange }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
-  const [speciesFilter, setSpeciesFilter] = useState("All");
-  const [characterFilter, setCharacterFilter] = useState("All");
-
-  const { characters, loading, error } = useCharacters(searchTerm, speciesFilter);
-
-  const starredIds: string[] = []; 
-
-
-  const displayedCharacters = characters.filter((c) =>
-    characterFilter === "Starred"
-      ? starredIds.includes(c.id)
-      : characterFilter === "Others"
-      ? !starredIds.includes(c.id)
-      : true
-  );
-
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-2">
       <div className="flex items-center gap-3 w-full">
       
-        <div className="relative w-full lg:w-1/3">
+        <div className="relative w-full ">
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"/>
         {/* Input de búsqueda */}
         <input
         type="text"
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => onSearchTermChange(e.target.value)}
         placeholder={UI_TEXT.SEARCH_PLACEHOLDER}
         className="w-full 
-        bg-secondary-100 text-black
+        bg-secondary-50 text-black
               pl-10 
               pr-3 
               py-3 
@@ -70,18 +57,18 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
 
       {/* Panel de filtros */}
       {showFilters && (
-        <div className="mt-3  md:w-1/3 border 2px w-full bg-white shadow-md rounded-lg p-4 space-y-4">
+        <div className="mt-3 border 2px w-full bg-white shadow-md rounded-lg p-4 space-y-4">
           <FilterGroup
             title="Character"
             options={CHARACTER_OPTIONS}
             selectedOption={characterFilter}
-            onSelect={setCharacterFilter}
+            onSelect={onCharacterFilterChange}
           />
           <FilterGroup
             title="Species"
             options={SPECIES_OPTIONS}
             selectedOption={speciesFilter}
-            onSelect={setSpeciesFilter}
+            onSelect={onSpeciesFilterChange}
           />
 
           <button className="w-full  bg-primary-600 text-white py-2 rounded-lg">
@@ -89,15 +76,6 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
         </button>
         </div>
       )}
-
-      {/* Mensajes */}
-      {loading && <p className="mt-2">Loading...</p>}
-      {error && <p className="mt-2 text-red-500">Error loading characters</p>}
-
-      {/* Resultados */}
-      <div >
-         <ResultsList characters={displayedCharacters} onSelectCharacter={onSelectCharacter} />
-      </div>
   </div>
   );
 };
