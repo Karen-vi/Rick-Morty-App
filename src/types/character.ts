@@ -9,6 +9,12 @@ export interface Character {
 
 export interface CharactersResponse {
   characters: {
+    info: { 
+      count: number; 
+      pages: number; 
+      next: number | null; 
+      prev: number | null; 
+    };
     results: Character[];
   };
 }

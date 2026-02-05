@@ -3,46 +3,31 @@ import { SearchBar } from "../../ui/SearchBar/SearchBar";
 import { ResultList } from "../../ui/ResultList/ResultList";
 import { useState } from "react";
 import type { Character } from "../../../types/character";
-import { useCharacters } from "../../../hooks/useCharacter"; 
+import { useAllCharacters } from "../../../hooks/useCharacter"; 
 import { UI_TEXT } from "../../../constants/uiText";
 import { SortControl } from "../../ui/SortControl/SortControl";
 
 type Props = { onSelectCharacter: (id: string) => void; };
 
 export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
-    const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null);
+    const [selectedCharacterId,] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [speciesFilter, setSpeciesFilter] = useState("All");
     const [characterFilter, setCharacterFilter] = useState("All")
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
     
-    const { characters, loading, error } = useCharacters(searchTerm, speciesFilter);
-    const starredIds: string[] = []; 
+    const { characters, loading, error } = useAllCharacters(searchTerm, speciesFilter);
+    // const starredIds: string[] = []; 
 
-    
-//     const displayedCharacters = characters.filter((c) =>
-//     characterFilter === "Starred"
-//       ? starredIds.includes(c.id)
-//       : characterFilter === "Others"
-//       ? !starredIds.includes(c.id)
-//       : true
-//   ).sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name) );
+    console.log( characters.map((c) => ({ name: c.name, image: c.image, })) );
 
-    // const displayedCharacters = characters .filter((c) => characterFilter === "Starred" ? starredIds.includes(c.id) : characterFilter === "Others" ? !starredIds.includes(c.id) : true ) .sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name) );
-   console.log(characters.map(c => c.name))
-    const displayedCharacters = characters.filter((c) => 
-        searchTerm ? c.name.toLowerCase()
-        .includes(searchTerm.toLowerCase()) : true 
-        
-        ).sort((a, b) => sortOrder === "asc" ? a.name.localeCompare(b.name, "en", { sensitivity: "base" }) : b.name.localeCompare(a.name, "en", { sensitivity: "base" }) );
+    const displayedCharacters = characters.filter((c:Character) => searchTerm ? c.name.toLowerCase()
+    .includes(searchTerm.toLowerCase()) : true 
+    ) 
+    .sort((a:Character, b:Character) => sortOrder === "asc" ? a.name.localeCompare(b.name, "en", { sensitivity: "base" }) : b.name.localeCompare(a.name, "en", { sensitivity: "base" }) );
   
-  
-  
-        const handleSelectCharacter = (id: string) => {
-    setSelectedCharacterId(id);
-    console.log("Character selected:", id);
-    }
+
   return (
     <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg">
         <h1 className="text-2xl  p-4 font-bold">{UI_TEXT.APP_TITLE}</h1>

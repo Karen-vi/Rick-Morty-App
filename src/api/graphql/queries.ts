@@ -14,9 +14,30 @@ export const GET_CHARACTER_DETAIL = gql`
   }
 `;
 
+// export const GET_CHARACTERS = gql`
+//   query GetCharacters($name: String, $species: String) {
+//     characters(filter: { name: $name, species: $species }) {
+//       results {
+//         id
+//         name
+//         image
+//         species
+//         status
+//         gender
+//       }
+//     }
+//   }
+// `;
+
 export const GET_CHARACTERS = gql`
-  query GetCharacters($name: String, $species: String) {
-    characters(filter: { name: $name, species: $species }) {
+  query GetCharacters($page: Int, $name: String, $species: String) {
+    characters(page: $page, filter: { name: $name, species: $species }) {
+      info {
+        count
+        pages
+        next
+        prev
+      }
       results {
         id
         name
@@ -28,3 +49,4 @@ export const GET_CHARACTERS = gql`
     }
   }
 `;
+

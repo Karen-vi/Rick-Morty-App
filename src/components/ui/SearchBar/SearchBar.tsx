@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useCharacters } from "../../../hooks/useCharacter";
-import type { Character } from "../../../types/character";
 import { UI_TEXT } from "../../../constants/uiText";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"; 
 import { SPECIES_OPTIONS, CHARACTER_OPTIONS } from "../../../constants/filters";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalSolid } from "@heroicons/react/24/solid";
 import { AdjustmentsVerticalIcon as AdjustmentsVerticalOutline } from "@heroicons/react/24/outline";
-import { ResultList } from "../ResultList/ResultList";
 
 
 
