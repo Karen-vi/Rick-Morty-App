@@ -4,6 +4,7 @@ import { ResultList } from "../../ui/ResultList/ResultList";
 import { useState } from "react";
 import type { Character } from "../../../types/character";
 import { useCharacters } from "../../../hooks/useCharacter"; 
+import { UI_TEXT } from "../../../constants/uiText";
 
 type Props = { onSelectCharacter: (id: string) => void; };
 
@@ -30,7 +31,8 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
     }
   return (
     <div className="w-full md:w-1/2  p-4 bg-green-50 rounded-lg">
-      <SearchBar searchTerm={searchTerm}
+        <h1 className="text-2xl  p-4 font-bold">{UI_TEXT.APP_TITLE}</h1>
+        <SearchBar searchTerm={searchTerm}
         onSearchTermChange={setSearchTerm}
         speciesFilter={speciesFilter}
         onSpeciesFilterChange={setSpeciesFilter}
