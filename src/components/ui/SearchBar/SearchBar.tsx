@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useCharacters } from "../../../hooks/useCharacter";
 import type { Character } from "../../../types/character";
 import { UI_TEXT } from "../../../constants/uiText";
-import { AdjustmentsVerticalIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"; 
 import { SPECIES_OPTIONS, CHARACTER_OPTIONS } from "../../../constants/filters";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
+import { AdjustmentsVerticalIcon as AdjustmentsVerticalSolid } from "@heroicons/react/24/solid";
+import { AdjustmentsVerticalIcon as AdjustmentsVerticalOutline } from "@heroicons/react/24/outline";
+
 
 
 type Props = {
@@ -34,8 +36,8 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
   return (
     <div className="w-full p-4">
       <div className="flex items-center gap-3 w-full">
-
-        <div className="relative w-2/5">
+      
+        <div className="relative w-full lg:w-2/5">
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"/>
         {/* Input de búsqueda */}
         <input
@@ -47,27 +49,27 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
         bg-secondary-100 text-black
               pl-10 
               pr-3 
-              py-2 
+              py-3 
               rounded-lg 
               focus:outline-none 
               focus:ring-1
               focus:ring-purple-400"
               
         />
+         <button
+          className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center"
+          onClick={() => setShowFilters(!showFilters)}
+          >
+          {showFilters ? ( <AdjustmentsVerticalSolid className="w-6 h-6 text-primary-600" /> ) : ( <AdjustmentsVerticalOutline className="w-6 h-6 text-primary-600" /> )}
+          </button>
         </div>
 
       {/* Botón toggle de filtros */}
-      <button
-        className="flex items-center gap-1"
-        onClick={() => setShowFilters(!showFilters)}
-      >
-        <AdjustmentsVerticalIcon className="w-6 h-7  text-primary-600" />
-      </button>
     </div>
 
       {/* Panel de filtros */}
       {showFilters && (
-        <div className="mt-3 w-full bg-white shadow-md rounded-lg p-4 space-y-4">
+        <div className="mt-3  md:w-2/5 border w-full bg-white shadow-md rounded-lg p-4 space-y-4">
           <FilterGroup
             title="Character"
             options={CHARACTER_OPTIONS}
@@ -81,7 +83,7 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
             onSelect={setSpeciesFilter}
           />
 
-          <button className="w-full bg-primary-600 text-white py-2 rounded-lg">
+          <button className="w-full  bg-primary-600 text-white py-2 rounded-lg">
           Apply Filters
         </button>
         </div>
@@ -103,7 +105,6 @@ export const SearchBar = ({ onSelectCharacter }: Props) => {
           </p>
         ))}
       </div>
-    
   </div>
   );
 };
