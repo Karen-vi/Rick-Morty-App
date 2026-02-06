@@ -9,7 +9,6 @@ export const GET_CHARACTER_DETAIL = gql`
       image
       species
       status
-      occupation
     }
   }
 `;

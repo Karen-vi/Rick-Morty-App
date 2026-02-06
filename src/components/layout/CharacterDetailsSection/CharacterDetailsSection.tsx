@@ -19,11 +19,15 @@ export const CharacterDetailSection = () => {
     fetch(`https://rickandmortyapi.com/api/character/${id}`)
       .then((res) => res.json())
       .then((data) => {
+        console.debug("Fetched character (REST):", data);
         if (isMounted) {
-          setCharacter(data);
+          // The public REST API doesn't provide `occupation` — map `type` as a fallback
+          const mapped = { ...data, occupation: data.type || undefined } as Character;
+          setCharacter(mapped);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Error fetching character:", err);
         if (isMounted) {
           setCharacter(null);
         }

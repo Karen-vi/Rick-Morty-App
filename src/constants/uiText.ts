@@ -5,7 +5,7 @@ export const UI_TEXT = {
   FAVORITES_TITLE: "STARRED CHARACTERS",
   STATUS:"Status",
   SPECIES:"Species",
-  OCCUPATION:"Occupation",
+  GENDER:"Gender",
   
   STATES: {
     LOADING: "Loading...",

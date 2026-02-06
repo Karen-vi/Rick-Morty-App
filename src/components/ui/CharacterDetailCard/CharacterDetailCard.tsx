@@ -6,7 +6,7 @@ export const CharacterDetailCard = ({ character }: { character: Character }) => 
   const details = [
     { label: UI_TEXT.SPECIES, value: character.species },
     { label: UI_TEXT.STATUS, value: character.status },
-    { label: UI_TEXT.OCCUPATION, value: character.occupation },
+    { label: UI_TEXT.GENDER, value: character.gender },
   ];
 
   return (
