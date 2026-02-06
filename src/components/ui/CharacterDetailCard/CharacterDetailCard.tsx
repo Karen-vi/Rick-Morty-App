@@ -9,15 +9,18 @@ export const CharacterDetailCard = ({ character }: { character: Character }) => 
     { label: UI_TEXT.OCCUPATION, value: character.occupation },
   ];
 
-    return (
-  <div className="flex flex-col space-y-4 text-gray-700">
-    {details.map((detail) => (
-      <div key={detail.label} className="flex flex-col">
-        <span className="font-semibold text-sm text-gray-900">{detail.label}</span>
-        <span>{detail.value}</span>
+  return (
+    <div className="bg-white rounded-md shadow-sm">
+      <div className="divide-y divide-gray-200">
+        {details.map((detail) => (
+          <div key={detail.label} className="px-4 py-5">
+            <span className="block text-sm font-semibold text-gray-900">
+              {detail.label}
+            </span>
+            <span className="block text-gray-700 mt-1">{detail.value || "-"}</span>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-)
-
+    </div>
+  );
 };

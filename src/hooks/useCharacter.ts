@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useApolloClient } from "@apollo/client";
+import { useApolloClient } from "@apollo/client/react";
 import { GET_CHARACTERS } from "../api/graphql/queries";
 import type { Character, CharactersResponse } from "../types/character";
 
-const MAX_PAGES = 4; // trae hasta ~80 personajes
+const MAX_PAGES = 6; 
 
 export const useAllCharacters = (
   searchTerm: string,
