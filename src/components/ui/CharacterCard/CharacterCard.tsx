@@ -6,7 +6,6 @@ type CharacterCardProps = {
 };
 
 export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
-  console.log(JSON.stringify(character.image))
   return (
     <div className="cursor-pointer hover:bg-secondary-40  border-t border-y "
     onClick={() => onSelect(character.id)}>

@@ -20,7 +20,6 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
     const { characters, loading, error } = useAllCharacters(searchTerm, speciesFilter);
     // const starredIds: string[] = []; 
 
-    console.log( characters.map((c) => ({ name: c.name, image: c.image, })) );
 
     const displayedCharacters = characters.filter((c:Character) => searchTerm ? c.name.toLowerCase()
     .includes(searchTerm.toLowerCase()) : true 
