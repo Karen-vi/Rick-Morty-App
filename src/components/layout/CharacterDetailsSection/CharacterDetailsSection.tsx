@@ -37,11 +37,11 @@ export const CharacterDetailSection = () => {
   if (!character) return null;
 
   return (
-    <div className="w-full md:w-1/3 bg-white shadow-lg p-6 overflow-auto md:sticky md:top-0 md:h-screen">
+    <div className="fixed md:static top-0 left-0 w-screen md:w-3/5 h-screen md:h-auto bg-white p-6 overflow-y-auto md:sticky md:top-20     z-50">
       {/* Back button visible only on mobile */}
       <div className="mb-4 md:hidden">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className="flex items-center space-x-2 text-sm text-gray-700"
         >
           <svg
@@ -57,8 +57,13 @@ export const CharacterDetailSection = () => {
         </button>
       </div>
 
-      <CharacterHeader character={character} />
-      <CharacterDetailCard character={character} />
+      {!character && id && <p className="text-center py-8">Cargando...</p>}
+      {character && (
+        <>
+          <CharacterHeader character={character} />
+          <CharacterDetailCard character={character} />
+        </>
+      )}
     </div>
   );
 };

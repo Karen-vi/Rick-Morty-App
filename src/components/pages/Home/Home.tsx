@@ -9,12 +9,12 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <div className="md:flex">
-        <main className={id ? "hidden md:block flex-1" : "flex-1"}>
+        <main className="w-full md:w-2/5">
           <CharacterSearchSection onSelectCharacter={(id: string) => navigate(`/character/${id}`)} />
         </main>
 
         {id && (
-          <aside className="hidden md:block w-1/3 border-l border-gray-200">
+          <aside className="hidden md:block md:w-3/5 border-l border-gray-200">
             <CharacterDetailSection />
           </aside>
         )}

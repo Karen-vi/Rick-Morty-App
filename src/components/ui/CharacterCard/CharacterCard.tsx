@@ -27,9 +27,9 @@ export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
             onError={() => setSrc(placeholder)}
             loading="lazy"
           />
-          <div>
-            <h2 className="font-bold text-lg">{character.name}</h2>
-            <p className="text-sm text-gray-600">{character.species}</p>
+          <div className="min-w-0 flex-1">
+            <h2 className="font-bold text-lg truncate">{character.name}</h2>
+            <p className="text-sm text-gray-600 truncate">{character.species}</p>
           </div>
         </div>
       </div>
