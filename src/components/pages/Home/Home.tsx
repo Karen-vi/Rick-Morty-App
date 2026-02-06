@@ -11,9 +11,9 @@ const Home = () => {
         <CharacterSearchSection onSelectCharacter={(id: string) => navigate(`/character/${id}`)} />
       </div>
 
-      {/* <div>
+      <div>
       <CharacterDetailSection />
-      </div> */}
+      </div>
     </div>
   );
 };

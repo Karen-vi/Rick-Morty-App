@@ -14,7 +14,7 @@ export const CharacterDetailSection = () => {
       .then(data => setCharacter(data));
   }, [id]);
 
-  if (!character) return <p>Loading...</p>;
+  if (!character) return 
 
   return (
     <div className="w-full border-l-4 border-red-500 md:w-1/3 fixed right-0 top-0 h-screen bg-red-100 shadow-lg p-4">

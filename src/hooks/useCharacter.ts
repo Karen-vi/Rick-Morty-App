@@ -1,77 +1,71 @@
 import { useEffect, useState } from "react";
-import { useApolloClient } from "@apollo/client/react";
+import { useApolloClient } from "@apollo/client";
 import { GET_CHARACTERS } from "../api/graphql/queries";
 import type { Character, CharactersResponse } from "../types/character";
 
-export const useAllCharacters = (searchTerm: string, speciesFilter?: string) => {
+const MAX_PAGES = 4; // trae hasta ~80 personajes
+
+export const useAllCharacters = (
+  searchTerm: string,
+  speciesFilter?: string
+) => {
   const client = useApolloClient();
+
   const [characters, setCharacters] = useState<Character[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
-    let isMounted = true;
+    let cancelled = false;
 
-    const fetchAll = async () => {
+    const fetchCharacters = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        let allResults: Character[] = [];
-        let page = 1;
-        let totalPages = 1;
+        let results: Character[] = [];
 
-        // primera consulta para obtener totalPages
-        const { data } = await client.query<CharactersResponse>({
-          query: GET_CHARACTERS,
-          variables: {
-            page,
-            name: searchTerm || undefined,
-            species: speciesFilter !== "All" ? speciesFilter : undefined,
-          },
-        });
-
-        if (!isMounted || controller.signal.aborted) return;
-
-        allResults = [...allResults, ...(data?.characters?.results || [])];
-        totalPages = data?.characters?.info?.pages || 1;
-
-        // traer el resto de páginas
-        for (page = 2; page <= totalPages; page++) {
-          if (!isMounted || controller.signal.aborted) return;
-
+        for (let page = 1; page <= MAX_PAGES; page++) {
           const { data } = await client.query<CharactersResponse>({
             query: GET_CHARACTERS,
             variables: {
               page,
               name: searchTerm || undefined,
-              species: speciesFilter !== "All" ? speciesFilter : undefined,
+              species:
+                speciesFilter && speciesFilter !== "All"
+                  ? speciesFilter
+                  : undefined,
             },
           });
 
-          allResults = [...allResults, ...(data?.characters?.results || [])];
+          if (cancelled) return;
+
+          const pageResults = data?.characters?.results || [];
+
+          // si ya no hay resultados, cortamos
+          if (pageResults.length === 0) break;
+
+          results = [...results, ...pageResults];
         }
 
-        if (isMounted) {
-          setCharacters(allResults);
+        if (!cancelled) {
+          setCharacters(results);
         }
-      } catch (err: unknown) {
-        if (isMounted && !controller.signal.aborted) {
-          setError(err instanceof Error ? err : new Error("Unexpected error"));
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err : new Error("Error loading data"));
         }
       } finally {
-        if (isMounted) {
+        if (!cancelled) {
           setLoading(false);
         }
       }
     };
 
-    fetchAll();
+    fetchCharacters();
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      cancelled = true;
     };
   }, [searchTerm, speciesFilter, client]);
 
