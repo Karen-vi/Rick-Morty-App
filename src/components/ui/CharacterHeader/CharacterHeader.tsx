@@ -23,7 +23,7 @@ export const CharacterHeader = ({ character }: { character: Character }) => {
                     loading="lazy"
                 />
                 {isFavorite(String(character.id)) && (
-                    <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
+                    <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 ">
                         <HeartSolid className="w-5 h-5 text-secondary-600" />
                     </div>
                 )}
