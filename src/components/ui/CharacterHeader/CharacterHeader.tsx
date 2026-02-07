@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { Character } from "../../../types/character";
+import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { useFavorites } from "../../../contexts/FavoritesContext";
 
 export const CharacterHeader = ({ character }: { character: Character }) => {
     const placeholder =
@@ -7,10 +9,11 @@ export const CharacterHeader = ({ character }: { character: Character }) => {
 
     const [imageError, setImageError] = useState(false);
     const imageSrc = imageError || !character.image ? placeholder : character.image.trim();
+    const { isFavorite } = useFavorites();
 
     return (
         <div className="flex flex-col gap-4 items-start space-x-4 mb-6">
-            <div className="relative flex-shrink-0">
+            <div className="relative flex-shrink-0 w-20 h-20">
                 <img
                     key={character.id}
                     src={imageSrc}
@@ -19,6 +22,11 @@ export const CharacterHeader = ({ character }: { character: Character }) => {
                     onError={() => setImageError(true)}
                     loading="lazy"
                 />
+                {isFavorite(String(character.id)) && (
+                    <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
+                        <HeartSolid className="w-5 h-5 text-secondary-600" />
+                    </div>
+                )}
             </div>
 
             <div className="flex-1 min-w-0">

@@ -45,16 +45,16 @@ export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
   );
 };
 
-const FavoriteButton = ({ id }: { id: string }) => {
+const FavoriteButton = ({ id }: { id: string | number }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
-  const fav = isFavorite(id);
+  const fav = isFavorite(String(id));
 
   return (
     <button
       aria-label={fav ? "Remove favorite" : "Add favorite"}
       onClick={(e) => {
         e.stopPropagation();
-        toggleFavorite(id);
+        toggleFavorite(String(id));
       }}
       className="p-1 rounded hover:bg-gray-100"
       title={fav ? "Remove favorite" : "Add favorite"}
