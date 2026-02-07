@@ -1,5 +1,8 @@
 import { useState } from "react";
 import type { Character } from "../../../types/character";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { useFavorites } from "../../../contexts/FavoritesContext";
 
 type CharacterCardProps = {
   character: Character;
@@ -27,12 +30,40 @@ export const CharacterCard = ({ character, onSelect }: CharacterCardProps) => {
             onError={() => setSrc(placeholder)}
             loading="lazy"
           />
-          <div className="min-w-0 flex-1">
-            <h2 className="font-bold text-lg truncate">{character.name}</h2>
-            <p className="text-sm text-gray-600 truncate">{character.species}</p>
+          <div className="min-w-0 flex-1 flex items-center justify-between">
+            <div className="mr-3 min-w-0">
+              <h2 className="font-bold text-lg truncate">{character.name}</h2>
+              <p className="text-sm text-gray-600 truncate">{character.species}</p>
+            </div>
+            <div>
+              <FavoriteButton id={character.id} />
+            </div>
           </div>
         </div>
       </div>
     </div>
+  );
+};
+
+const FavoriteButton = ({ id }: { id: string }) => {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const fav = isFavorite(id);
+
+  return (
+    <button
+      aria-label={fav ? "Remove favorite" : "Add favorite"}
+      onClick={(e) => {
+        e.stopPropagation();
+        toggleFavorite(id);
+      }}
+      className="p-1 rounded hover:bg-gray-100"
+      title={fav ? "Remove favorite" : "Add favorite"}
+    >
+      {fav ? (
+        <HeartSolid className="w-5 h-5 text-secondary-600" />
+      ) : (
+        <HeartOutline className="w-5 h-5 text-gray-400" />
+      )}
+    </button>
   );
 };
