@@ -6,6 +6,7 @@ export const UI_TEXT = {
   STATUS:"Status",
   SPECIES:"Species",
   GENDER:"Gender",
+  APPLY_FILTERS: "Filter",
   
   STATES: {
     LOADING: "Loading...",

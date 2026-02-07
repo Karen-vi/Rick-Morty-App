@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UI_TEXT } from "../../../constants/uiText";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid"; 
 import { SPECIES_OPTIONS, CHARACTER_OPTIONS } from "../../../constants/filters";
@@ -18,6 +18,22 @@ export const SearchBar = ({
   characterFilter,
   onCharacterFilterChange }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
+  // Local temp state for filters — only apply when user clicks Apply Filters
+  const [tempSpecies, setTempSpecies] = useState<string>(speciesFilter);
+  const [tempCharacter, setTempCharacter] = useState<string>(characterFilter);
+
+  // keep temp in sync when parent props change (e.g., reset)
+  useEffect(() => {
+    setTempSpecies(speciesFilter);
+    setTempCharacter(characterFilter);
+  }, [speciesFilter, characterFilter]);
+
+  const applyFilters = () => {
+    onSpeciesFilterChange(tempSpecies);
+    onCharacterFilterChange(tempCharacter);
+    setShowFilters(false);
+  };
+
   return (
     <div className="w-full p-2">
       <div className="flex items-center gap-3 w-full">
@@ -58,19 +74,19 @@ export const SearchBar = ({
           <FilterGroup
             title="Character"
             options={CHARACTER_OPTIONS}
-            selectedOption={characterFilter}
-            onSelect={onCharacterFilterChange}
+            selectedOption={tempCharacter}
+            onSelect={setTempCharacter}
           />
           <FilterGroup
             title="Species"
             options={SPECIES_OPTIONS}
-            selectedOption={speciesFilter}
-            onSelect={onSpeciesFilterChange}
+            selectedOption={tempSpecies}
+            onSelect={setTempSpecies}
           />
 
-          <button className="w-full  bg-primary-600 text-white py-2 rounded-lg">
-          Apply Filters
-        </button>
+          <button onClick={applyFilters} className="w-full  bg-primary-600 text-white py-2 rounded-lg">
+            {UI_TEXT.APPLY_FILTERS}
+          </button>
         </div>
       )}
   </div>
