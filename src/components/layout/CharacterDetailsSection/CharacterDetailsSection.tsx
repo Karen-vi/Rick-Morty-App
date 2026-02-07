@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { Character } from "../../../types/character";
 import { CharacterHeader } from "../../ui/CharacterHeader/CharacterHeader";
 import { CharacterDetailCard } from "../../ui/CharacterDetailCard/CharacterDetailCard";
+import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 
 export const CharacterDetailSection = () => {
   const { id } = useParams();
@@ -21,9 +22,7 @@ export const CharacterDetailSection = () => {
       .then((data) => {
         console.debug("Fetched character (REST):", data);
         if (isMounted) {
-          // The public REST API doesn't provide `occupation` — map `type` as a fallback
-          const mapped = { ...data, occupation: data.type || undefined } as Character;
-          setCharacter(mapped);
+          setCharacter(data as Character);
         }
       })
       .catch((err) => {
@@ -48,16 +47,8 @@ export const CharacterDetailSection = () => {
           onClick={() => navigate("/")}
           className="flex items-center space-x-2 text-sm text-gray-700"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          <span>Volver</span>
+          <ArrowLongLeftIcon className="w-5 h-5" />
+          
         </button>
       </div>
 

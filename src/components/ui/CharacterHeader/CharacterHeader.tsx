@@ -9,7 +9,7 @@ export const CharacterHeader = ({ character }: { character: Character }) => {
     const imageSrc = imageError || !character.image ? placeholder : character.image.trim();
 
     return (
-        <div className="flex flex-col items-start space-x-4 mb-6">
+        <div className="flex flex-col gap-4 items-start space-x-4 mb-6">
             <div className="relative flex-shrink-0">
                 <img
                     key={character.id}
