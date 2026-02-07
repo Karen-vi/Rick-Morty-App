@@ -6,25 +6,40 @@ import type { Character } from "../../../types/character";
 import { useAllCharacters } from "../../../hooks/useCharacter"; 
 import { UI_TEXT } from "../../../constants/uiText";
 import { SortControl } from "../../ui/SortControl/SortControl";
+import { useFavorites } from "../../../contexts/FavoritesContext";
 
 type Props = { onSelectCharacter: (id: string) => void; };
 
 export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
-    // const [selectedCharacterId,] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [speciesFilter, setSpeciesFilter] = useState("All");
     const [characterFilter, setCharacterFilter] = useState("All")
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+    const { favorites } = useFavorites();
     
     const { characters, loading, error } = useAllCharacters(searchTerm, speciesFilter);
-    // const starredIds: string[] = []; 
 
 
-    const displayedCharacters = characters.filter((c:Character) => searchTerm ? c.name.toLowerCase()
-    .includes(searchTerm.toLowerCase()) : true 
-    ) 
-    .sort((a:Character, b:Character) => sortOrder === "asc" ? a.name.localeCompare(b.name, "en", { sensitivity: "base" }) : b.name.localeCompare(a.name, "en", { sensitivity: "base" }) );
+    const displayedCharacters = characters
+      .filter((c: Character) => {
+        // Filtro de nombre
+        if (searchTerm && !c.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+          return false;
+        }
+        
+        // Filtro de favoritos (characterFilter)
+        const isFav = favorites.includes(String(c.id));
+        if (characterFilter === "Starred" && !isFav) return false;
+        if (characterFilter === "Others" && isFav) return false;
+        
+        return true;
+      })
+      .sort((a: Character, b: Character) => 
+        sortOrder === "asc" 
+          ? a.name.localeCompare(b.name, "en", { sensitivity: "base" }) 
+          : b.name.localeCompare(a.name, "en", { sensitivity: "base" })
+      );
   
 
   return (
@@ -37,6 +52,7 @@ export const CharacterSearchSection = ({ onSelectCharacter }: Props) => {
         onSpeciesFilterChange={setSpeciesFilter}
         characterFilter={characterFilter}
         onCharacterFilterChange={setCharacterFilter} />
+        
         <SortControl sortOrder={sortOrder} onChange={setSortOrder} />
         <div className="flex-1 overflow-y-auto scrollbar-hide">
         <ResultList characters={displayedCharacters} onSelectCharacter={onSelectCharacter}  />

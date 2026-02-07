@@ -18,11 +18,9 @@ export const SearchBar = ({
   characterFilter,
   onCharacterFilterChange }: Props) => {
   const [showFilters, setShowFilters] = useState(false);
-  // Local temp state for filters — only apply when user clicks Apply Filters
   const [tempSpecies, setTempSpecies] = useState<string>(speciesFilter);
   const [tempCharacter, setTempCharacter] = useState<string>(characterFilter);
 
-  // keep temp in sync when parent props change (e.g., reset)
   useEffect(() => {
     setTempSpecies(speciesFilter);
     setTempCharacter(characterFilter);
@@ -40,7 +38,6 @@ export const SearchBar = ({
       
         <div className="relative w-full ">
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary-200 pointer-events-none"/>
-        {/* Input de búsqueda */}
         <input
         type="text"
         value={searchTerm}
@@ -65,10 +62,9 @@ export const SearchBar = ({
           </button>
         </div>
 
-      {/* Botón toggle de filtros */}
+      
     </div>
 
-      {/* Panel de filtros */}
       {showFilters && (
         <div className="mt-3 border 2px w-full bg-white shadow-md rounded-lg p-4 space-y-4">
           <FilterGroup
